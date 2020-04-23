@@ -19,11 +19,15 @@ def any_msg(message):
     keyboard.add(callback_button)
     bot.send_message(message.chat.id, "Добрый день 111" + message.from_user.first_name + "! Приветсвуем Вас в боте поиска сообщений. Нажмите на кнопку «Старт» чтобы начать поиски.", reply_markup=keyboard)
 
-@bot.callback_query_handler(func=lambda call: True)
-def callback_inline(message):
+@bot.message_handler(content_types=["text"])
+def repeat_all_messages(message): # Название функции не играет никакой роли, в принципе
+    bot.send_message(message.chat.id, message.text)
 
-    if message.data == "1":
-        bot.send_message(chat_id=message.message.chat.id, text = "Отлично...можете прислать ссылку на канал/чат, а после успешной проверки действительности ссылки с нашей стороны, отправьте слово, которое нужно поискать.")
+# @bot.callback_query_handler(func=lambda call: True)
+# def callback_inline(message):
+
+#     if message.data == "1":
+#         bot.send_message(chat_id=message.message.chat.id, text = "Отлично...можете прислать ссылку на канал/чат, а после успешной проверки действительности ссылки с нашей стороны, отправьте слово, которое нужно поискать.")
 
 
 # while True:
