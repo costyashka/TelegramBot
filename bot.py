@@ -32,8 +32,8 @@ def any_msg(message):
 
 @bot.message_handler(commands=["read"])
 def read_chat(message):
-    bot.send_message(message.from_user.id, str(list(i for i in client.iter_dialogs()));
-    bot.send_message(message.from_user.id, "Введите название чата");
+    bot.send_message(message.from_user.id, str(list(i for i in client.iter_dialogs()))
+    bot.send_message(message.from_user.id, "Введите название чата")
 
     def get_chat(message):
         dp = client.get_entity(message)
