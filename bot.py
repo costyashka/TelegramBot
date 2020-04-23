@@ -31,11 +31,11 @@ def any_msg(message):
 @bot.message_handler(commands=["read"])
 def read_chat(message):
     bot.send_message(message.from_user.id, "Введите название чата");
-    bot.register_next_step_handler(message, get_chat);
     def get_chat(message):
         dp = client.get_entity(message)
         messages = client.get_messages(dp, limit=1)
         bot.send_message(message.chat.id, messages)
+    bot.register_next_step_handler(message, get_chat);
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_inline(message):
