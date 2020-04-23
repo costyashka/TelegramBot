@@ -1,4 +1,3 @@
 pyTelegramBotAPI
 pysocks
-gunicorn
-flask
+telethon
