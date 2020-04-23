@@ -13,7 +13,8 @@ api_id = 995881
 api_hash = "e9d6b9e0826b56613da7a625b1ced401"              
 phone_number = "+79521998467" 
 bot = telebot.TeleBot('1102747678:AAEirVClMkXe3H_lAg43Ky-LiH2KekCTpiM')
-client = TelegramClient(StringSession(), api_id, api_hash)
+session = '1ApWapzMBuyuAIbVp0jxeSyBGiRPWOXeqzfqBX7wuaFddqyqU2ioF68uSFK0cXCfO-y2Bt5wxtMxJqlGaihtL4Q763eMzdubxebwQyf7j9Sgvhjcz5zftvwIS-0RaVfhk5BY0EJ9HUx5fJifUBdgbhdr9xy76IQ6Roj9P-IdjYUSpa7lSHD_lMHfUdwca2C_dlRAXyfgmdys9IJMnXxZYPZsiAde2ICwgcGmzu27eUiRp41ym8GHv__OGtfnI60tsPOhpPqaG9EAwkZbVJwdoei2T84e0o7cDHIJa-ngiwCdXNTkCCoh0Lczb4kibOgJhzD6r82aPvqEYmMLJyHdoN0oo4f8_eIM'
+client = TelegramClient(StringSession(session), api_id, api_hash)
 client.start()
 print(client.session.save())
 
