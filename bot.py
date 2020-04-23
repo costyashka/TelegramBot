@@ -2,7 +2,7 @@ import telebot
 from telebot import apihelper,types
 import socks
 from time import sleep
-from telethon import TelegramClient
+from telethon import TelegramClient, sync, events
 from telethon.tl.functions.contacts import ResolveUsernameRequest
 from telethon.tl.functions.channels import GetMessagesRequest
 from telethon.tl.functions.messages import GetHistoryRequest, ReadHistoryRequest
@@ -31,7 +31,7 @@ def any_msg(message):
     bot.send_message(message.chat.id, "Добрый день 111" + message.from_user.first_name + "! Приветсвуем Вас в боте поиска сообщений. Нажмите на кнопку «Старт» чтобы начать поиски.", reply_markup=keyboard)
 
 @bot.message_handler(commands=["read"])
-def read_chat(message):
+async def read_chat(message):
     bot.send_message(message.from_user.id, "Введите название чата")
 
     def get_chat(message):
