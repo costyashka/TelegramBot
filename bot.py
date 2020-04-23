@@ -32,13 +32,21 @@ def any_msg(message):
 
 @bot.message_handler(commands=["read"])
 def read_chat(message):
-    bot.send_message(message.from_user.id, str(list(i for i in client.iter_dialogs())))
     bot.send_message(message.from_user.id, "Введите название чата")
 
     def get_chat(message):
         dp = client.get_entity(message)
-        messages = client.get_messages(dp, limit=1)
-        bot.send_message(message.chat.id,messages.text)
+        messages = client(GetHistoryRequest(
+            peer=dp,
+            limit=1,
+            offset_date=None,
+            offset_id=0,
+            max_id=0,
+            min_id=0,
+            add_offset=0,
+            hash=0))
+        bot.send_message(message.chat.id,messages)
+        print(messages)
     bot.register_next_step_handler(message, get_chat);
 
 @bot.callback_query_handler(func=lambda call: True)
