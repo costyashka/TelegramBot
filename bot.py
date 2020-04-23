@@ -6,14 +6,16 @@ from telethon import TelegramClient
 from telethon.tl.functions.contacts import ResolveUsernameRequest
 from telethon.tl.functions.channels import GetMessagesRequest
 from telethon.tl.functions.messages import GetHistoryRequest, ReadHistoryRequest
+from telethon.sessions import StringSession
 #from telethon.utils import InputPeerChannel
 
-api_id = 995881               # API ID (получается при регистрации приложения на my.telegram.org)
-api_hash = "e9d6b9e0826b56613da7a625b1ced401"              # API Hash (оттуда же)
+api_id = 995881               
+api_hash = "e9d6b9e0826b56613da7a625b1ced401"              
 phone_number = "+79521998467" 
 bot = telebot.TeleBot('1102747678:AAEirVClMkXe3H_lAg43Ky-LiH2KekCTpiM')
-client = TelegramClient('session_name', api_id, api_hash)
+client = TelegramClient(StringSession(), api_id, api_hash)
 client.start()
+print(client.session.save())
 
 balance = 0
 
