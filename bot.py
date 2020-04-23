@@ -31,4 +31,4 @@ def repeat_all_messages(message): # Название функции не игр�
 
 
 # while True:
-bot.polling()
+bot.polling(none_stop=True)
