@@ -1,60 +1,28 @@
-import telebot
-from telebot import apihelper,types
-import socks
-from time import sleep
-from telethon import TelegramClient, sync, events
-from telethon.tl.functions.contacts import ResolveUsernameRequest
+
+from telethon import TelegramClient, sync, events, connection
 from telethon.tl.functions.channels import GetMessagesRequest
 from telethon.tl.functions.messages import GetHistoryRequest, ReadHistoryRequest
-from telethon.sessions import StringSession
+import logging
+#logging.basicConfig(level=logging.DEBUG)
 #from telethon.utils import InputPeerChannel
+url = input('Input link to Telegram channel: ')
+num = int(input('Input a number of posts: '))
 
-api_id = 995881
-host = '104.248.63.49'
-port = 30588
-proxy = (socks.SOCKS5, host, port)
-api_hash = "e9d6b9e0826b56613da7a625b1ced401"              
-phone_number = "+79521998467" 
-bot = telebot.TeleBot('1102747678:AAEirVClMkXe3H_lAg43Ky-LiH2KekCTpiM')
-session = '1ApWapzMBuyuAIbVp0jxeSyBGiRPWOXeqzfqBX7wuaFddqyqU2ioF68uSFK0cXCfO-y2Bt5wxtMxJqlGaihtL4Q763eMzdubxebwQyf7j9Sgvhjcz5zftvwIS-0RaVfhk5BY0EJ9HUx5fJifUBdgbhdr9xy76IQ6Roj9P-IdjYUSpa7lSHD_lMHfUdwca2C_dlRAXyfgmdys9IJMnXxZYPZsiAde2ICwgcGmzu27eUiRp41ym8GHv__OGtfnI60tsPOhpPqaG9EAwkZbVJwdoei2T84e0o7cDHIJa-ngiwCdXNTkCCoh0Lczb4kibOgJhzD6r82aPvqEYmMLJyHdoN0oo4f8_eIM'
-client = TelegramClient('session_name', api_id, api_hash)
-client.start()
+def func(url = url,num=num):
+    proxy = ('proxy.digitalresistance.dog',443,'d41d8cd98f00b204e9800998ecf8427e')
+    api_hash = "e9d6b9e0826b56613da7a625b1ced401" 
+    api_id = 995881
+    client = TelegramClient('session_name', api_id, api_hash, proxy=proxy,  
+        connection=connection.tcpmtproxy.ConnectionTcpMTProxyRandomizedIntermediate)
 
-balance = 0
-
-
-@bot.message_handler(commands=['start'])
-def any_msg(message):
-    keyboard = types.InlineKeyboardMarkup()
-    callback_button = types.InlineKeyboardButton(text="Старт", callback_data="1")
-    keyboard.add(callback_button)
-    bot.send_message(message.chat.id, "Добрый день 111" + message.from_user.first_name + "! Приветсвуем Вас в боте поиска сообщений. Нажмите на кнопку «Старт» чтобы начать поиски.", reply_markup=keyboard)
-
-@bot.message_handler(commands=["read"])
-async def read_chat(message):
-    bot.send_message(message.from_user.id, "Введите название чата")
-
-    def get_chat(message):
-        dp = client.get_entity(message)
-        messages = client(GetHistoryRequest(
-            peer=dp,
-            limit=1,
-            offset_date=None,
-            offset_id=0,
-            max_id=0,
-            min_id=0,
-            add_offset=0,
-            hash=0))
-        bot.send_message(message.chat.id,messages)
-        print(messages)
-    bot.register_next_step_handler(message, get_chat);
-
-@bot.callback_query_handler(func=lambda call: True)
-def callback_inline(message):
-
-    if message.data == "1":
-        bot.send_message(chat_id=message.message.chat.id, text = "Отлично...можете прислать ссылку на канал/чат, а после успешной проверки действительности ссылки с нашей стороны, отправьте слово, которое нужно поискать.")
-
-
-# while True:
-bot.polling(none_stop=True)
+    client.connect()
+    dp = client.get_entity(url)
+    messages = client.get_messages(dp,limit=num)
+    for i in messages: #все сообщения в массиве messages, если консольный вывод не нужен, то сотрите этот цикл
+        try:
+            print(i.to_dict()['message'])
+            print('----------')
+        except Exception:
+            pass
+    return len(messages)
+func()
